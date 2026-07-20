@@ -6,6 +6,15 @@
     <title>Facility Reservation System</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        /* Calendar Styles */
+        .calendar-container {
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
 <body>
@@ -25,77 +34,79 @@
         <a href="reports.html"><i class="bi bi-bar-chart"></i>Reports</a>
 
         <div class="menu">
-            <a href="#">Profile</a>
+            <a href="profile.html">Profile</a>
             <a href="#">Log Out</a>
         </div>
     </aside>
 
     <!-- Body -->
     <main>
-        <div>
+        <div class="container">
             <h1>Calendar</h1>
 
-            <div>
-                <!-- Month -->
-                 <p>Month</p>
-                <select>
-                    <option>January</option>
-                    <option>February</option>
-                    <option>March</option>
-                    <option>April</option>
-                    <option>May</option>
-                    <option>June</option>
-                    <option>July</option>
-                    <option>August</option>
-                    <option>September</option>
-                    <option>October</option>
-                    <option>November</option>
-                    <option>December</option>
-                </select>
+            <div class="calendar-container">
+                <div class="calendar-card">
+                    <!-- Month -->
+                    <p>Month</p>
+                    <select>
+                        <option>January</option>
+                        <option>February</option>
+                        <option>March</option>
+                        <option>April</option>
+                        <option>May</option>
+                        <option>June</option>
+                        <option>July</option>
+                        <option>August</option>
+                        <option>September</option>
+                        <option>October</option>
+                        <option>November</option>
+                        <option>December</option>
+                    </select>
 
-                <!-- Day -->
-                 <p>Day</p>
-                <select>
-                    <option>01</option>
-                    <option>02</option>
-                    <option>03</option>
-                    <option>04</option>
-                    <option>05</option>
-                    <option>06</option>
-                    <option>07</option>
-                    <option>08</option>
-                    <option>09</option>
-                    <option>10</option>
-                    <option>11</option>
-                    <option>12</option>
-                    <option>13</option>
-                    <option>14</option>
-                    <option>15</option>
-                    <option>16</option>
-                    <option>17</option>
-                    <option>18</option>
-                    <option>19</option>
-                    <option>20</option>
-                    <option>21</option>
-                    <option>22</option>
-                    <option>23</option>
-                    <option>24</option>
-                    <option>25</option>
-                    <option>26</option>
-                    <option>27</option>
-                    <option>28</option>
-                    <option>29</option>
-                    <option>30</option>
-                    <option>31</option>
-                </select>
+                    <!-- Day -->
+                    <p>Day</p>
+                    <select>
+                        <option>01</option>
+                        <option>02</option>
+                        <option>03</option>
+                        <option>04</option>
+                        <option>05</option>
+                        <option>06</option>
+                        <option>07</option>
+                        <option>08</option>
+                        <option>09</option>
+                        <option>10</option>
+                        <option>11</option>
+                        <option>12</option>
+                        <option>13</option>
+                        <option>14</option>
+                        <option>15</option>
+                        <option>16</option>
+                        <option>17</option>
+                        <option>18</option>
+                        <option>19</option>
+                        <option>20</option>
+                        <option>21</option>
+                        <option>22</option>
+                        <option>23</option>
+                        <option>24</option>
+                        <option>25</option>
+                        <option>26</option>
+                        <option>27</option>
+                        <option>28</option>
+                        <option>29</option>
+                        <option>30</option>
+                        <option>31</option>
+                    </select>
 
-                <!-- Year -->
-                 <p>Year</p>
-                <select>
-                    <option>2023</option>
-                    <option>2024</option>
-                    <option>2025</option>
-                </select>
+                    <!-- Year -->
+                    <p>Year</p>
+                    <select>
+                        <option>2023</option>
+                        <option>2024</option>
+                        <option>2025</option>
+                    </select>
+                </div>
             </div>
         </div>
     </main>

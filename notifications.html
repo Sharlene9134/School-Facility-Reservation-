@@ -6,6 +6,30 @@
     <title>Facility Reservation System</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <style>
+        .card{
+            background-color: #f0f0f0;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        .notif-card{
+            background-color: lightblue;
+            /* Top, Right, Bottom, Left*/
+            margin: 8px 0px 5px 0px;
+            padding: 8px;
+            border-radius: 12px;
+            transition: all 0.3s ease; 
+        }
+
+        .notif-card:hover{
+            background: white;
+            color: blue;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -32,8 +56,31 @@
 
     <!-- Body -->
     <main>
-        <div>
+        <div class="container">
             <h1>Notifications</h1>
+
+            <div class="card">
+                <div class="notif-card">
+                    <h4>New notification</h4>
+                    <p>Faculty Staff requested conference B</p>
+                </div>
+
+                <div class="notif-card">
+                    <h4>New Notification</h4>
+                </div>
+
+                <div class="notif-card">
+                    <h4>New Notification</h4>
+                </div>
+
+                <div class="notif-card">
+                    <h4>New Notification</h4>
+                </div>
+
+                <div class="notif-card">
+                    <h4>New Notification</h4>
+                </div>
+            </div>
         </div>
     </main>
 </body>

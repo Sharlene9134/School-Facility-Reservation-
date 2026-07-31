@@ -7,12 +7,164 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
     <style>
-        /* Calendar Styles */
+        /* Calendar */
         .calendar-container {
             background-color: #f0f0f0;
             padding: 20px;
             border-radius: 5px;
             margin-top: 10px;
+        }
+
+        .calendar-card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+        }
+
+        .week {
+            background-color: lightblue;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .days {
+            background-color: beige;
+            padding: 10px;
+            text-align: left;
+            min-height: 90px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            font-weight: 600;
+        }
+
+        /* Effects */
+        .days:hover {
+            border-color: #4fc3f7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        }
+
+        /* For empty days */
+        .days.empty {
+            background-color: #fafafa;
+            color: #b0b8c4;
+            opacity: 0.5;
+            cursor: default;
+        }
+
+        .days.empty:hover {
+            transform: none;
+            box-shadow: none;
+            border-color: transparent;
+        }
+
+        /* Today's date */
+        .days.today {
+            border-color: #4fc3f7;
+            background-color: #e3f2fd;
+        }
+
+        /* Events on days */
+        .days .event {
+            font-size: 10px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            margin-top: 4px;
+            font-weight: 500;
+            background: #e3f2fd;
+            color: #1565c0;
+            border-left: 3px solid #4fc3f7;
+        }
+
+        .days .event.green {
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-left-color: #66bb6a;
+        }
+
+        .days .event.orange {
+            background: #fff3e0;
+            color: #e65100;
+            border-left-color: #fb8c00;
+        }
+
+        /* Today badge */
+        .today-badge {
+            display: inline-block;
+            background: #4fc3f7;
+            color: white;
+            padding: 1px 10px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+
+        /* Calendar Header with Navigation */
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .calendar-header h2 {
+            font-size: 24px;
+            color: #1a2035;
+            margin: 0;
+        }
+
+        .calendar-header .nav-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .calendar-header .nav-buttons button {
+            padding: 8px 16px;
+            border: none;
+            background: #f0f2f5;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .calendar-header .nav-buttons button:hover {
+            background: #4fc3f7;
+            color: white;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 600px) {
+            .days {
+                min-height: 60px;
+                font-size: 12px;
+                padding: 6px;
+            }
+            .days .event {
+                font-size: 8px;
+                padding: 1px 4px;
+            }
+            .calendar-header h2 {
+                font-size: 18px;
+            }
+            .week {
+                font-size: 11px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -28,7 +180,7 @@
         <a href="dashboard.html"><i class="bi bi-house"></i>Dashboard</a>
         <a href="facilities.html"><i class="bi bi-building"></i>Facilities</a>
         <a href="reservation.html"><i class="bi bi-calendar"></i>Reservations</a>
-        <a href="calendar.html"><i class="bi bi-calendar3"></i>Calendar</a>
+        <a href="calendar.html" class="active"><i class="bi bi-calendar3"></i>Calendar</a>
         <a href="maintenance.html"><i class="bi bi-wrench"></i>Maintenance</a>
         <a href="notifications.html"><i class="bi bi-bell"></i>Notifications</a>
         <a href="reports.html"><i class="bi bi-bar-chart"></i>Reports</a>
@@ -46,69 +198,183 @@
 
             <div class="calendar-container">
                 <div class="calendar-card">
-                    <!-- Month -->
-                    <p>Month</p>
-                    <select>
-                        <option>January</option>
-                        <option>February</option>
-                        <option>March</option>
-                        <option>April</option>
-                        <option>May</option>
-                        <option>June</option>
-                        <option>July</option>
-                        <option>August</option>
-                        <option>September</option>
-                        <option>October</option>
-                        <option>November</option>
-                        <option>December</option>
-                    </select>
+                    
+                    <!-- Header and Navigtion -->
+                    <div class="calendar-header">
+                        <h2 id="monthYear">July 2024</h2>
+                        <div class="nav-buttons">
+                            <button onclick="changeMonth(-1)">◀</button>
+                            <button onclick="goToday()">Today</button>
+                            <button onclick="changeMonth(1)">▶</button>
+                        </div>
+                    </div>
 
-                    <!-- Day -->
-                    <p>Day</p>
-                    <select>
-                        <option>01</option>
-                        <option>02</option>
-                        <option>03</option>
-                        <option>04</option>
-                        <option>05</option>
-                        <option>06</option>
-                        <option>07</option>
-                        <option>08</option>
-                        <option>09</option>
-                        <option>10</option>
-                        <option>11</option>
-                        <option>12</option>
-                        <option>13</option>
-                        <option>14</option>
-                        <option>15</option>
-                        <option>16</option>
-                        <option>17</option>
-                        <option>18</option>
-                        <option>19</option>
-                        <option>20</option>
-                        <option>21</option>
-                        <option>22</option>
-                        <option>23</option>
-                        <option>24</option>
-                        <option>25</option>
-                        <option>26</option>
-                        <option>27</option>
-                        <option>28</option>
-                        <option>29</option>
-                        <option>30</option>
-                        <option>31</option>
-                    </select>
+                    <!-- CALENDAR GRID -->
+                    <div class="calendar-grid" id="calendarGrid">
+                        <!-- Generated by JavaScript -->
+                    </div>
 
-                    <!-- Year -->
-                    <p>Year</p>
-                    <select>
-                        <option>2023</option>
-                        <option>2024</option>
-                        <option>2025</option>
-                    </select>
                 </div>
             </div>
         </div>
     </main>
+
+    <script>
+        // Your Event Data (Schedules)
+        const events = [
+            { date: '2024-07-01', title: '1:00 PM - 3:00 PM AIR', type: 'blue' },
+            { date: '2024-07-03', title: '6:00 AM - 10:00 AM Computer Lab 1', type: 'green' },
+            { date: '2024-07-05', title: '10:00 AM - 12:00 PM Gymnasium', type: 'orange' },
+            { date: '2024-07-08', title: '9:00 AM - 11:00 AM Conference A', type: 'blue' },
+            { date: '2024-07-10', title: '2:00 PM - 4:00 PM Tennis Court', type: 'green' },
+            { date: '2024-07-12', title: '8:00 AM - 10:00 AM Swimming Pool', type: 'orange' },
+            { date: '2024-07-15', title: '1:00 PM - 3:00 PM Event Hall', type: 'blue' },
+            { date: '2024-07-18', title: '10:00 AM - 12:00 PM Conference B', type: 'green' },
+            { date: '2024-07-20', title: '3:00 PM - 5:00 PM Gymnasium', type: 'orange' },
+            { date: '2024-07-22', title: '9:00 AM - 11:00 AM Computer Lab 1', type: 'blue' },
+            { date: '2024-07-25', title: '2:00 PM - 4:00 PM AIR', type: 'green' },
+            { date: '2024-07-28', title: '8:00 AM - 10:00 AM Conference A', type: 'orange' },
+            { date: '2024-07-30', title: '1:00 PM - 3:00 PM Swimming Pool', type: 'blue' },
+        ];
+
+        // ============================================
+        // Helper Functions
+
+        // Get events for a specific date
+        function getEventsForDate(dateStr) {
+            return events.filter(e => e.date === dateStr);
+        }
+
+        // Format date as YYYY-MM-DD
+        function formatDate(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        }
+
+        // ============================================
+        // STEP 3: Build the Calendar
+        let currentDate = new Date(2024, 6, 1); // Start with July 2024
+
+        function renderCalendar() {
+            const year = currentDate.getFullYear();
+            const month = currentDate.getMonth();
+            const today = new Date();
+            const todayStr = formatDate(today);
+
+            // Update the month/year in the header
+            const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            document.getElementById('monthYear').textContent = `${monthNames[month]} ${year}`;
+
+            // Calculate calendar information
+            const firstDay = new Date(year, month, 1).getDay(); // 0=Sun, 1=Mon, etc.
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const daysInPrevMonth = new Date(year, month, 0).getDate();
+
+            const grid = document.getElementById('calendarGrid');
+            let html = '';
+
+            // ---- Add Days of Week ----
+            const weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            weekDays.forEach(day => {
+                html += `<div class="week">${day}</div>`;
+            });
+
+            // ---- Add Previous Month's Days (empty/ghost days) ----
+            let dayCount = 0;
+            for (let i = firstDay - 1; i >= 0; i--) {
+                const day = daysInPrevMonth - i;
+                html += `<div class="days empty">${day}</div>`;
+                dayCount++;
+            }
+
+            // ---- Add Current Month's Days ----
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dateObj = new Date(year, month, day);
+                const dateStr = formatDate(dateObj);
+                const isToday = dateStr === todayStr;
+                const dayEvents = getEventsForDate(dateStr);
+
+                // Build the day cell
+                let classes = 'days';
+                if (isToday) classes += ' today';
+
+                html += `<div class="${classes}" onclick="showDayDetails('${dateStr}')">`;
+                
+                // Day number with "Today" badge
+                html += `<div class="day-number">${day}`;
+                if (isToday) {
+                    html += ` <span class="today-badge">Today</span>`;
+                }
+                html += `</div>`;
+
+                // Show events (if any)
+                dayEvents.forEach(e => {
+                    html += `<div class="event ${e.type}">${e.title}</div>`;
+                });
+
+                html += `</div>`;
+                dayCount++;
+            }
+
+            // ---- Add Next Month's Days to fill last row ----
+            const remaining = 42 - dayCount;
+            for (let day = 1; day <= remaining; day++) {
+                html += `<div class="days empty">${day}</div>`;
+            }
+
+            // Put everything in the grid
+            grid.innerHTML = html;
+        }
+
+        // ============================================
+        // STEP 4: Navigation Functions
+
+        // Change month (delta = -1 for previous, 1 for next)
+        function changeMonth(delta) {
+            currentDate.setMonth(currentDate.getMonth() + delta);
+            renderCalendar();
+        }
+
+        // Go to today
+        function goToday() {
+            currentDate = new Date();
+            renderCalendar();
+        }
+
+        // ============================================
+        // STEP 5: Show Day Details (Popup)
+        function showDayDetails(dateStr) {
+            const dayEvents = getEventsForDate(dateStr);
+            
+            // Format date nicely
+            const parts = dateStr.split('-');
+            const dateObj = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            const options = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' };
+            const displayDate = dateObj.toLocaleDateString('en-US', options);
+
+            if (dayEvents.length === 0) {
+                alert(`📅 ${displayDate}\n\n✅ No events scheduled for this day.\nAll facilities are available!`);
+            } else {
+                let message = `📅 ${displayDate}\n\n`;
+                message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                dayEvents.forEach((e, i) => {
+                    message += `${i + 1}. ${e.title}\n`;
+                });
+                message += `━━━━━━━━━━━━━━━━━━━━━━━━━━━\n`;
+                message += `📊 Total: ${dayEvents.length} event(s)`;
+                alert(message);
+            }
+        }
+
+        // ============================================
+        // STEP 6: Start the Calendar!
+        renderCalendar();
+        console.log('✅ Calendar is ready! Click any day to see events.');
+        console.log('📊 Total events:', events.length);
+    </script>
 </body>
 </html>
